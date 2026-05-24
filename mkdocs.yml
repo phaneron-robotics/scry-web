@@ -1,0 +1,130 @@
+site_name: Scry
+site_description: Your ROS 2 robot in your pocket — AI-first debugging from Android.
+site_url: https://phaneron-robotics.github.io/scry-web/
+repo_url: https://github.com/phaneron-robotics/scry-web
+repo_name: phaneron-robotics/scry-web
+edit_uri: edit/master/docs/
+
+# Branding
+copyright: Copyright &copy; 2026 Phaneron Robotics, Inc.
+
+theme:
+  name: material
+  palette:
+    # Dark mode default — matches the Scry brand.
+    - scheme: slate
+      primary: black
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - scheme: default
+      primary: black
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - content.tabs.link
+    - announce.dismiss
+
+nav:
+  - Home: index.md
+  - Get started:
+      - get-started/index.md
+      - Install Scry on Android: get-started/install-android.md
+      - Install scry-connect on the robot: get-started/install-connect.md
+      - Pair the phone and robot: get-started/pair.md
+      - First debugging session: get-started/first-session.md
+  - Use Scry:
+      - use/index.md
+      - Chat with the agent: use/chat.md
+      - File attachments and images: use/attachments.md
+      - Voice input: use/voice.md
+      - Background monitors: use/monitors.md
+      - Sending feedback: use/feedback.md
+  - Architecture:
+      - architecture/index.md
+      - Overview: architecture/overview.md
+      - Development phases: architecture/development-phases.md
+      - UI design: architecture/ui-design.md
+      - AI provider strategy: architecture/ai-providers.md
+  - Reference:
+      - reference/index.md
+      - MCP tools: reference/mcp-tools.md
+      - Permissions: reference/permissions.md
+  - Operator:
+      - operator/index.md
+      - Beta testing program: operator/testing.md
+      - Release runbook: operator/release-runbook.md
+      - Security audit: operator/security-audit.md
+  - Legal:
+      - legal/index.md
+      - Privacy policy: legal/privacy.md
+      - Data safety: legal/data-safety.md
+      - Security policy: legal/security.md
+      - License: legal/license.md
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+  - pymdownx.caret
+  - pymdownx.tilde
+  - pymdownx.mark
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/phaneron-robotics
+      name: Phaneron Robotics on GitHub
+    - icon: fontawesome/solid/globe
+      link: https://www.phaneronrobotics.com/
+      name: phaneronrobotics.com
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
