@@ -3,7 +3,7 @@ site_description: AI-first debugging for ROS 2 robots, from your Android phone.
 site_url: https://phaneron-robotics.github.io/scry-web/
 repo_url: https://github.com/phaneron-robotics/scry-web
 repo_name: phaneron-robotics/scry-web
-edit_uri: edit/master/docs/
+edit_uri: ""
 
 copyright: Copyright &copy; 2026 Phaneron Robotics, Inc.
 
@@ -48,7 +48,6 @@ theme:
     - search.share
     - content.code.copy
     - content.code.annotate
-    - content.action.edit
     - content.tabs.link
     - announce.dismiss
 
