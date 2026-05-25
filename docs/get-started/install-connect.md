@@ -9,7 +9,7 @@ same `scry-connect` from PyPI — they just package it differently.
 
 ## Requirements
 
-- **ROS 2** installed and sourced — Humble, Iron, Jazzy, Kilted, or
+- **ROS 2** installed and sourced — Humble, Jazzy, Kilted, Lyrical, or
   Rolling. Any DDS (Fast-DDS, CycloneDDS, Connext, Zenoh) works since
   scry-connect uses `rclpy` (RMW-agnostic).
 - **Python 3.10+** (ROS 2 ships its own python; that's fine).
@@ -23,7 +23,7 @@ your ROS distro, picks Docker if available else pip, writes a
 `systemd --user` unit, starts the service, and prints a pairing QR.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/phaneron-robotics/scry-connect/master/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/phaneron-robotics/scry-web/master/install.sh | bash
 ```
 
 Re-running upgrades in place.
@@ -67,7 +67,7 @@ in the connect repo.
 
 | Image tag | Resolves to |
 |---|---|
-| `humble`, `iron`, `jazzy`, `kilted`, `rolling` | Latest scry-connect on that ROS distro |
+| `humble`, `jazzy`, `kilted`, `lyrical`, `rolling` | Latest scry-connect on that ROS distro |
 | `0.1.1-jazzy` (etc.) | Pinned scry-connect version |
 | `latest` | `jazzy` |
 
