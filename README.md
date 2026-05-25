@@ -5,7 +5,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/scry-connect.svg)](https://pypi.org/project/scry-connect/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-Public docs + install guide + privacy pages for [Scry](https://github.com/phaneron-robotics/scry-android).
+Public docs + install guide + privacy pages for [Scry](https://phaneron-robotics.github.io/scry-web/).
 
 Built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
 Lives at **https://phaneron-robotics.github.io/scry-web/**.
