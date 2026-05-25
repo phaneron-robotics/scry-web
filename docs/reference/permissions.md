@@ -25,13 +25,13 @@ These are listed in the Play Store before you install:
 
 ## What Scry never asks for
 
-- ❌ **Location** — not now, not planned
-- ❌ **Contacts**
-- ❌ **SMS / call log**
-- ❌ **Advertising ID**
-- ❌ **Health data**
-- ❌ **Always-on microphone** (mic is push-to-talk only)
-- ❌ **Storage write outside the app sandbox**
+- **Location** — not now, not planned
+- **Contacts**
+- **SMS / call log**
+- **Advertising ID**
+- **Health data**
+- **Always-on microphone** (mic is push-to-talk only)
+- **Storage write outside the app sandbox**
 
 If a future build needs any of the above, it'll be opt-in with a
 specific feature gating it (e.g. "share location with the robot for

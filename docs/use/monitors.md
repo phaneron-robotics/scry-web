@@ -39,12 +39,12 @@ changed, not a stream of "still bad."
 
 When a monitor trips, an **assistant message** appears in chat:
 
-> ⚠ Monitor fired: `/odom rate < 10 Hz` — current value 7.4 Hz
+> Note: Monitor fired: `/odom rate < 10 Hz` — current value 7.4 Hz
 >
 > [robot context excerpt]
 
 It looks identical to a regular assistant reply (same alignment, same
-brand mark). Difference is the ⚠ glyph and the explicit "Monitor
+brand mark). Difference is the Note: glyph and the explicit "Monitor
 fired" prefix.
 
 The agent then sees this message on the next turn, so you can ask

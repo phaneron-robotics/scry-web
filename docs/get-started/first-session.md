@@ -98,7 +98,7 @@ Three places to look, in order:
    the robot's state changed (node crashed, topic stopped).
 2. **Check the connect logs** on the robot: `journalctl --user -u
    scry-connect -f`. Per-call audit logs are in `/var/log/scry/audit.log`.
-3. **File feedback** via Settings → Feedback in the app, or 👎 on the
+3. **File feedback** via Settings → Feedback in the app, or on the
    specific reply. Both go to the operator's dashboard.
 
 ## What's next

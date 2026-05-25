@@ -15,12 +15,12 @@ scry-connect deliberately omits:
 
 | Capability | Status | Reason |
 |---|---|---|
-| Arbitrary shell exec | ❌ Not exposed | Massive blast radius for AI mistakes |
-| File system write outside `/var/log/scry` | ❌ Not exposed | Same |
-| Network proxy / port forwarding | ❌ Not exposed | Same |
-| Package install (apt, pip, etc.) | ❌ Not exposed | Same |
-| Direct DDS access (bypassing rclpy) | ❌ Not exposed | RMW-agnostic is a goal |
-| Streaming sensor data (live camera, lidar) | ⚠️ Via SSE only | Returns thumbnails / decimated samples |
+| Arbitrary shell exec | Not exposed | Massive blast radius for AI mistakes |
+| File system write outside `/var/log/scry` | Not exposed | Same |
+| Network proxy / port forwarding | Not exposed | Same |
+| Package install (apt, pip, etc.) | Not exposed | Same |
+| Direct DDS access (bypassing rclpy) | Not exposed | RMW-agnostic is a goal |
+| Streaming sensor data (live camera, lidar) | Via SSE only | Returns thumbnails and decimated samples |
 
 If you want any of the above, fork scry-connect and add the tool —
 the registry is straightforward.

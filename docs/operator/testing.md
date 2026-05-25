@@ -45,7 +45,7 @@ This beta carries real new features — both bug reports and
 | **Account** | Sign in with Google, GitHub, magic-link email, or password. Sign out from Settings → Account. Sign back in — your profile (role / company) should still be there. |
 | **Onboarding tour** | First launch goes through five swipeable pages. Skip works; reaching the end finishes the tour. Replay from Settings → Account → Show app tour again. |
 | **Chat** | Connect to a robot (QR or LAN scan), ask questions, expect inline rendered tool results. Voice-to-text mic button. File / image attach (+) in the composer. |
-| **Inline thumbs** | 👍 / 👎 below each assistant reply. Snackbar should pop with an "Add a note" link. The buttons grey out after one tap per message. |
+| **Inline thumbs** | / below each assistant reply. Snackbar should pop with an "Add a note" link. The buttons grey out after one tap per message. |
 | **Feedback form** | Settings → Feedback. Pick kind, rate stars, write something, submit. Confirm the thank-you screen appears. |
 | **Robot pairing / fleets** | Add a robot via QR or manual host. Switch between robots from the chat top-bar chip. |
 | **Permissions** | Camera (QR + photos), microphone (voice), notifications (background monitors). Settings → Permissions opens the system pages. |
@@ -57,7 +57,7 @@ Three channels, in order of preference:
 1. **In-app, Settings → Feedback.** This goes straight to the
    operator's database with your device info attached. Use this
    for anything you can describe in a sentence or two.
-2. **In-app inline thumbs.** Tap 👎 on the specific assistant
+2. **In-app inline thumbs.** Tap on the specific assistant
    reply that was bad, then tap **Add a note** in the snackbar.
    Most useful for "this answer was wrong / hallucinated /
    missed an obvious thing" — the operator gets the conversation
@@ -136,7 +136,7 @@ select count(*) from public.feedback;   -- should not error
 
 ### Operator triage cadence
 
-- Inline thumbs (👎 specifically) — daily glance at
+- Inline thumbs (specifically) — daily glance at
   `select * from public.feedback where kind='inline_thumb' and
   sentiment='negative' order by created_at desc limit 20;`
 - Top-level feedback form — same query without the sentiment

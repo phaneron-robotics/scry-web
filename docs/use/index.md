@@ -12,9 +12,9 @@ How to actually drive the app day-to-day, once you're past first install.
   No audio leaves the device.
 - **[Background monitors](monitors.md)** — edge-triggered alerts when
   a threshold trips. Fires into chat as if the assistant posted it.
-- **[Sending feedback](feedback.md)** — 👍 / 👎 on every reply +
-  a top-level form for general impressions, bug reports, feature
-  requests.
+- **[Sending feedback](feedback.md)** — inline thumbs-up / thumbs-down
+  on every assistant reply, plus a top-level form for general
+  impressions, bug reports, and feature requests.
 
 ## The five tabs
 

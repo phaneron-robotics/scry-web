@@ -67,7 +67,7 @@ window without proportional value.
 
 ## Privacy reminder
 
-Attachments are part of the conversation context. If you also tap 👎
+Attachments are part of the conversation context. If you also tap thumbs down
 on a reply that referenced the attachment, **only the user's preceding
 prompt and tool names are sent to the feedback DB** — not the
 attachment content. See [Sending feedback](feedback.md).

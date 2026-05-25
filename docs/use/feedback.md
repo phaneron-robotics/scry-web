@@ -3,13 +3,13 @@
 Two channels, both write to the same `feedback` table in the Phaneron
 Supabase project.
 
-## 👍 / 👎 on a specific reply
+## Inline thumbs on a specific reply
 
-Every settled assistant message has thumbs icons in the action row
-below it. Tap one:
+Every settled assistant message has thumbs-up and thumbs-down icons in
+the action row below it. Tap one:
 
-- **👍** records `sentiment=positive` for that reply
-- **👎** records `sentiment=negative`
+- **thumbs up** records `sentiment=positive` for that reply
+- **thumbs down** records `sentiment=negative`
 - A snackbar appears for ~3 seconds with an **Add a note** action
 - Tap **Add a note** to open a small dialog and type a free-form
   comment (up to 4000 chars)
@@ -20,14 +20,14 @@ below it. Tap one:
 
 | Field | Sent? | Notes |
 |---|---|---|
-| Your sentiment (👍/👎) | ✅ | The actual rating |
-| Your preceding question | ✅ | Trimmed to 8 KB |
-| Tool names called this turn | ✅ | Just names — e.g. `["ros_topic_hz","fleet_overview"]` |
-| The assistant's reply text | ❌ | Never sent |
-| Tool **arguments** | ❌ | Never sent |
-| Tool **results** | ❌ | Never sent |
-| Robot name | ❌ | Not part of the feedback row |
-| App version, OS version, locale | ✅ | For triage only |
+| Your sentiment (thumbs up / thumbs down) | Yes | The actual rating |
+| Your preceding question | Yes | Trimmed to 8 KB |
+| Tool names called this turn | Yes | Just names — e.g. `["ros_topic_hz","fleet_overview"]` |
+| The assistant's reply text | No | Never sent |
+| Tool **arguments** | No | Never sent |
+| Tool **results** | No | Never sent |
+| Robot name | No | Not part of the feedback row |
+| App version, OS version, locale | Yes | For triage only |
 
 Tool args/results are excluded because they can leak robot internals
 (IPs, topic message values, sensor data). The user's prompt + tool

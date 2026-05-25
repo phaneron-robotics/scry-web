@@ -1,26 +1,31 @@
 site_name: Scry
-site_description: Your ROS 2 robot in your pocket — AI-first debugging from Android.
+site_description: AI-first debugging for ROS 2 robots, from your Android phone.
 site_url: https://phaneron-robotics.github.io/scry-web/
 repo_url: https://github.com/phaneron-robotics/scry-web
 repo_name: phaneron-robotics/scry-web
 edit_uri: edit/master/docs/
 
-# Branding
 copyright: Copyright &copy; 2026 Phaneron Robotics, Inc.
 
 theme:
   name: material
+  custom_dir: overrides
+  logo: assets/scry-mark.svg
+  favicon: assets/favicon.svg
+  icon:
+    repo: fontawesome/brands/github
   palette:
-    # Dark mode default — matches the Scry brand.
+    # Dark mode — Scry brand default.
     - scheme: slate
-      primary: black
-      accent: green
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+    # Light mode — warm cream variant.
     - scheme: default
-      primary: black
-      accent: green
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
@@ -29,7 +34,10 @@ theme:
     code: JetBrains Mono
   features:
     - navigation.instant
+    - navigation.instant.prefetch
     - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
     - navigation.top
@@ -37,6 +45,7 @@ theme:
     - toc.follow
     - search.highlight
     - search.suggest
+    - search.share
     - content.code.copy
     - content.code.annotate
     - content.action.edit
@@ -80,6 +89,9 @@ nav:
       - Security policy: legal/security.md
       - License: legal/license.md
 
+extra_css:
+  - stylesheets/brand.css
+
 markdown_extensions:
   - abbr
   - admonition
@@ -112,9 +124,6 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.tilde
   - pymdownx.mark
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra:
   social:
@@ -124,6 +133,7 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://www.phaneronrobotics.com/
       name: phaneronrobotics.com
+  generator: false
 
 plugins:
   - search:

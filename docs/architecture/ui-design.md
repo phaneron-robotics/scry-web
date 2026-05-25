@@ -114,11 +114,11 @@ Shown on first launch or when adding a new robot.
 │  ─ ─ ─ Saved Robots ─ ─ ─           │
 │                                      │
 │  ┌──────────────────────────────┐    │
-│  │ ● TurtleBot-1  192.168.1.50 │    │
+│  │ TurtleBot-1  192.168.1.50 │    │
 │  │   Last connected: 2h ago     │    │
 │  └──────────────────────────────┘    │
 │  ┌──────────────────────────────┐    │
-│  │ ○ Lab Robot   192.168.1.51   │    │
+│  │ Lab Robot   192.168.1.51   │    │
 │  │   Last connected: 3 days ago │    │
 │  └──────────────────────────────┘    │
 │                                      │
@@ -185,7 +185,7 @@ The hero screen. Clean chat interface with multi-modal input.
 
 ```
 ┌──────────────────────────────────────┐
-│  AI Chat       ● TurtleBot-1  ▼     │
+│  AI Chat       TurtleBot-1  ▼     │
 ├──────────────────────────────────────┤
 │                                      │
 │  ┌──────────────────────────────┐    │
@@ -198,13 +198,13 @@ The hero screen. Clean chat interface with multi-modal input.
 │  │ Scry AI                 │    │
 │  │                              │    │
 │  │ ▸ Reading /cmd_vel (5 msgs)  │    │
-│  │   ✓ Done — 0.12s            │    │
+│  │   Done — 0.12s            │    │
 │  │ ▸ Reading /odom (5 msgs)    │    │
-│  │   ✓ Done — 0.15s            │    │
+│  │   Done — 0.15s            │    │
 │  │ ▸ Inspecting /diff_drive..  │    │
-│  │   ✓ Done — 0.08s            │    │
+│  │   Done — 0.08s            │    │
 │  │ ▸ Getting wheel_radius..    │    │
-│  │   ✓ Done — 0.05s            │    │
+│  │   Done — 0.05s            │    │
 │  │                              │    │
 │  │ **Problem**: Left wheel      │    │
 │  │ radius is 0.033m but right   │    │
@@ -407,7 +407,7 @@ you don't have to bounce between screens to swap models.
 │  Install Ollama → ollama pull ...   │
 │                                      │
 │  ── DEVELOPER ──                     │
-│  Show tiered-context stats [ ○──● ] │
+│  Show tiered-context stats [ ○──] │
 │  Surface loaded skills/toolsets …   │
 │                                      │
 │  Scry 0.1.0                          │

@@ -4,13 +4,13 @@
 
 | Phase | Focus | Status |
 |-------|-------|--------|
-| Phase 0 | Scaffolding | ✅ Shipped |
-| Phase 1 | AI Chat MVP — text/voice/image, ~70 MCP tools, Claude | ✅ Shipped |
-| Phase 1.5 | Multi-provider + parallel + watchers + UX polish | ✅ Shipped |
-| Phase 2 | Browse hub + Dashboard + Logs + TF + Processes | ✅ Shipped |
-| Phase 3 | Rich rendering + live mini-panels + monitors + fleet | ✅ Shipped |
-| Phase 4 | Reliability + onboarding + packaging | 🚧 In progress |
-| Phase 5 | Testing + Release | ⏳ Pending |
+| Phase 0 | Scaffolding | Shipped |
+| Phase 1 | AI Chat MVP — text/voice/image, ~70 MCP tools, Claude | Shipped |
+| Phase 1.5 | Multi-provider + parallel + watchers + UX polish | Shipped |
+| Phase 2 | Browse hub + Dashboard + Logs + TF + Processes | Shipped |
+| Phase 3 | Rich rendering + live mini-panels + monitors + fleet | Shipped |
+| Phase 4 | Reliability + onboarding + packaging | In progress |
+| Phase 5 | Testing + Release | Pending |
 
 The roadmap was originally written as a six-phase timeline. Phase 3 grew
 into a much larger surface than the original "camera + plot" plan: a full
@@ -21,7 +21,7 @@ phase table above reflects what's actually shipped.
 
 ---
 
-## Phase 0: Scaffolding — ✅ Shipped
+## Phase 0: Scaffolding — Shipped
 
 ### Robot Side (scry-connect)
 - [x] Python project with `pyproject.toml` and package structure
@@ -44,7 +44,7 @@ phase table above reflects what's actually shipped.
 
 ---
 
-## Phase 1: AI Chat MVP — ✅ Shipped
+## Phase 1: AI Chat MVP — Shipped
 
 ### Robot Side
 - [x] ~99 MCP tools across **per-verb manager classes**: topic, service, node, param, action, lifecycle, pkg, component, ros2_control, daemon, multicast, doctor, extensions, interface, bag, dds/env, diagnostics, tf, process, system, watcher, behavior_tree, teleop, docker
@@ -79,7 +79,7 @@ phase table above reflects what's actually shipped.
 
 ---
 
-## Phase 1.5: Multi-provider + parallel + watchers + UX polish — ✅ Shipped
+## Phase 1.5: Multi-provider + parallel + watchers + UX polish — Shipped
 
 ### Robot side (connect)
 - [x] **`WatcherManager`** — four long-running tools that observe ROS events for up to 60 s:
@@ -113,7 +113,7 @@ phase table above reflects what's actually shipped.
 
 ---
 
-## Phase 2: Browse hub + Dashboard + Logs + TF + Processes — ✅ Shipped
+## Phase 2: Browse hub + Dashboard + Logs + TF + Processes — Shipped
 
 ### Android Side
 - [x] **Dashboard ("Robot" tab)** — sectioned, honest. Identity / Graph / Liveness / Diagnostics / DDS health (opt-in probe). No fabricated traffic-light verdicts; every value is a fact. See `ui/dashboard/`.
@@ -143,7 +143,7 @@ phase table above reflects what's actually shipped.
 
 ---
 
-## Phase 3: Rich rendering + live mini-panels + monitors + fleet — ✅ Shipped
+## Phase 3: Rich rendering + live mini-panels + monitors + fleet — Shipped
 
 Originally scoped as "camera + plot" — grew into a full rich-renderer
 subsystem because the AI's natural output for spatial / temporal /
@@ -214,7 +214,7 @@ card carries the data.
 
 ---
 
-## Phase 4: Reliability + onboarding + packaging — 🚧 In progress
+## Phase 4: Reliability + onboarding + packaging — In progress
 
 ### Android Side
 - [x] Multi-robot quick switch — chat header dropdown (shipped as part of Phase 3)
@@ -236,14 +236,14 @@ card carries the data.
 - [ ] `render_bt_live` phone-side tool — subscribe to `/behavior_tree_log` for ~10 s and replay status updates into the inline BT canvas. Canvas already accepts `nodeStates`; wiring is mechanical. (See note at end of Phase 3 — pattern matches `render_scene_live`.)
 
 ### Gate
-- Switch between 2+ robots without crashes (✅ already gated by Phase 3)
+- Switch between 2+ robots without crashes (already gated by Phase 3)
 - App handles network disconnection gracefully (TODO)
-- Settings persist correctly (✅)
+- Settings persist correctly ()
 - First-run onboarding completes in <2 min (TODO)
 
 ---
 
-## Phase 5: Testing + Release — ⏳ Pending
+## Phase 5: Testing + Release — Pending
 
 ### Testing
 - [x] **Drift detectors** — `tests/test_tools_registry.py` (core-set parity + write classification), `tests/test_skill_tool_references.py` (skill → tool reference check, token budget)

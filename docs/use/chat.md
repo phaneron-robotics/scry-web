@@ -48,10 +48,10 @@ Every settled assistant message has a row of small icons:
 
 | Icon | What |
 |---|---|
-| 🛟 (scry mark) | Subtle indicator that the agent finished this turn |
-| 📋 Copy | Copy the assistant's text to clipboard |
-| 🔄 Retry | Re-run this turn — sends the prior user message again |
-| 👍 / 👎 | Flag this reply (see [Sending feedback](feedback.md)) |
+| (scry mark) | Subtle indicator that the agent finished this turn |
+| Copy | Copy the assistant's text to clipboard |
+| Retry | Re-run this turn — sends the prior user message again |
+| / | Flag this reply (see [Sending feedback](feedback.md)) |
 | ⋮ More | Edit message, fork conversation, delete from here |
 
 ## Editing and forking

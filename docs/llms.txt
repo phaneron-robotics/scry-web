@@ -1,0 +1,67 @@
+# Scry
+
+> Open-source Android app and Python MCP server that together turn any
+> ROS 2 robot into something you can debug by chatting with an AI agent.
+> Phone is the thick client; robot just exposes its ROS 2 graph as
+> Model Context Protocol tools. No cloud backend, no telemetry.
+
+Maintained by Phaneron Robotics, Inc. Apache 2.0 license.
+
+## Quick facts
+
+- Android 9 (API 28) or newer.
+- ROS 2 Humble, Iron, Jazzy, Kilted, or Rolling.
+- DDS- and middleware-agnostic (uses rclpy).
+- Bring your own AI key — OpenRouter, Claude, OpenAI, Gemini, or local
+  Ollama for offline use.
+- Around ninety-nine MCP tools, thirty-one of which require explicit
+  user approval before they run.
+- Phone and robot communicate directly over LAN — port 5339, HTTP and
+  Server-Sent Events.
+
+## Get started
+
+- [Install the Android app](https://phaneron-robotics.github.io/scry-web/get-started/install-android/)
+- [Install scry-connect on the robot](https://phaneron-robotics.github.io/scry-web/get-started/install-connect/)
+- [Pair the phone and robot](https://phaneron-robotics.github.io/scry-web/get-started/pair/)
+- [First debugging session](https://phaneron-robotics.github.io/scry-web/get-started/first-session/)
+
+## Use Scry
+
+- [Chat with the agent](https://phaneron-robotics.github.io/scry-web/use/chat/)
+- [File attachments and images](https://phaneron-robotics.github.io/scry-web/use/attachments/)
+- [Voice input](https://phaneron-robotics.github.io/scry-web/use/voice/)
+- [Background monitors](https://phaneron-robotics.github.io/scry-web/use/monitors/)
+- [Sending feedback](https://phaneron-robotics.github.io/scry-web/use/feedback/)
+
+## Architecture
+
+- [System overview](https://phaneron-robotics.github.io/scry-web/architecture/overview/)
+- [Development phases](https://phaneron-robotics.github.io/scry-web/architecture/development-phases/)
+- [UI design](https://phaneron-robotics.github.io/scry-web/architecture/ui-design/)
+- [AI provider strategy](https://phaneron-robotics.github.io/scry-web/architecture/ai-providers/)
+
+## Reference
+
+- [MCP tools catalog](https://phaneron-robotics.github.io/scry-web/reference/mcp-tools/)
+- [Android permissions](https://phaneron-robotics.github.io/scry-web/reference/permissions/)
+
+## Operator runbooks
+
+- [Beta testing program](https://phaneron-robotics.github.io/scry-web/operator/testing/)
+- [Release runbook](https://phaneron-robotics.github.io/scry-web/operator/release-runbook/)
+- [Security audit checklist](https://phaneron-robotics.github.io/scry-web/operator/security-audit/)
+
+## Legal
+
+- [Privacy policy](https://phaneron-robotics.github.io/scry-web/legal/privacy/)
+- [Play Store Data Safety](https://phaneron-robotics.github.io/scry-web/legal/data-safety/)
+- [Security policy](https://phaneron-robotics.github.io/scry-web/legal/security/)
+- [License](https://phaneron-robotics.github.io/scry-web/legal/license/)
+
+## Source repositories
+
+- Android app: https://github.com/phaneron-robotics/scry-android
+- MCP server: https://github.com/phaneron-robotics/scry-connect
+- This docs site: https://github.com/phaneron-robotics/scry-web
+- Brand assets: https://github.com/phaneron-robotics/scry-brand
