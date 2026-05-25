@@ -17,7 +17,12 @@
 #   ROS_DISTRO         = humble | jazzy | …        (auto-detected if unset)
 #   SCRY_PORT          = 5339                       (default)
 #   SCRY_AUTH_MODE     = open | token | mtls        (default: open)
-#   SCRY_NO_SYSTEMD    = 1                          (skip the unit install)
+#   SCRY_SYSTEMD       = 1 | 0                     (force-install / force-skip
+#                                                    the unit; otherwise the
+#                                                    script prompts the user
+#                                                    when systemd is available
+#                                                    and auto-skips when not)
+#   SCRY_NO_SYSTEMD    = 1                          (legacy alias for SCRY_SYSTEMD=0)
 #
 # What it does:
 #   1. Detects ROS distro from $ROS_DISTRO or /opt/ros/*/setup.bash.
@@ -46,6 +51,72 @@ warn() { echo -e "$WARN $*" >&2; }
 fail() { echo -e "$FAIL $*" >&2; exit 1; }
 
 has() { command -v "$1" >/dev/null 2>&1; }
+
+# Decide whether to write the systemd --user unit. Returns 0 (install
+# it) or 1 (skip), printing a one-line rationale via info/warn.
+#
+# Precedence:
+#   1. SCRY_NO_SYSTEMD=1      → skip, no prompt (legacy opt-out)
+#   2. SCRY_SYSTEMD=1         → install, no prompt
+#   3. SCRY_SYSTEMD=0         → skip, no prompt
+#   4. systemctl missing OR
+#      PID 1 isn't systemd    → skip automatically (chroot / WSL /
+#                                Docker without systemd / macOS host)
+#   5. /dev/tty unreadable    → skip (curl | bash in CI), tell the
+#                                user how to opt in next time
+#   6. Otherwise              → prompt "[Y/n]", default Y. Read from
+#                                /dev/tty so it works under curl|bash.
+want_systemd() {
+    if [ "${SCRY_NO_SYSTEMD:-0}" = "1" ]; then
+        info "Skipping systemd unit (SCRY_NO_SYSTEMD=1)."
+        return 1
+    fi
+    case "${SCRY_SYSTEMD:-}" in
+        1|yes|true) return 0 ;;
+        0|no|false)
+            info "Skipping systemd unit (SCRY_SYSTEMD=$SCRY_SYSTEMD)."
+            return 1
+            ;;
+    esac
+    if ! has systemctl; then
+        info "systemctl not found — skipping systemd unit."
+        return 1
+    fi
+    # PID 1 is the init binary. On real systemd hosts /proc/1/comm
+    # contains "systemd"; in chroots / many containers / WSL it's
+    # something else (bash, init, sh). Belt-and-braces: also check
+    # that the user dbus socket exists.
+    if [ -r /proc/1/comm ] && [ "$(cat /proc/1/comm 2>/dev/null)" != "systemd" ]; then
+        info "PID 1 isn't systemd — skipping systemd unit."
+        return 1
+    fi
+    # Open fd 3 onto /dev/tty for both reading and writing. If that
+    # fails (CI, dockerized curl|bash with no tty attached, pipelines
+    # under nohup, etc.), there's no human to ask — bail.
+    if ! exec 3<>/dev/tty 2>/dev/null; then
+        warn "No interactive terminal — skipping systemd unit. To install"
+        warn "the unit non-interactively, re-run with SCRY_SYSTEMD=1."
+        return 1
+    fi
+    local answer=""
+    printf '%b Install a systemd --user unit so scry-connect starts on login? [Y/n]: ' "$INFO" >&3
+    if ! read -r answer <&3; then
+        # EOF on the tty also counts as "no human" — don't silently
+        # default to yes just because read failed.
+        exec 3<&-
+        warn "Couldn't read from terminal — skipping systemd unit."
+        warn "To install the unit non-interactively, re-run with SCRY_SYSTEMD=1."
+        return 1
+    fi
+    exec 3<&-
+    case "${answer,,}" in
+        ""|y|yes) return 0 ;;
+        *)
+            info "Skipping systemd unit (user declined)."
+            return 1
+            ;;
+    esac
+}
 
 # Detect the ROS distro the user has installed. Returns the distro name
 # on stdout, or empty string if none found. Honours ROS_DISTRO env var.
@@ -102,8 +173,7 @@ install_docker() {
     info "Pulling image (this may take a couple of minutes on first run)…"
     docker pull "$image"
 
-    if [ "${SCRY_NO_SYSTEMD:-0}" = "1" ]; then
-        info "Skipping systemd unit (SCRY_NO_SYSTEMD=1)."
+    if ! want_systemd; then
         info "Start manually with:"
         echo "    docker run -d --restart=unless-stopped --network=host --ipc=host --pid=host \\"
         echo "      -e ROS_DOMAIN_ID=\$ROS_DOMAIN_ID --name scry-connect $image"
@@ -224,8 +294,7 @@ install_pip() {
         echo "    export PATH=\"\$HOME/.local/bin:\$PATH\""
     fi
 
-    if [ "${SCRY_NO_SYSTEMD:-0}" = "1" ]; then
-        info "Skipping systemd unit (SCRY_NO_SYSTEMD=1)."
+    if ! want_systemd; then
         info "Start manually with:"
         echo "    source /opt/ros/${distro}/setup.bash"
         echo "    ${bin_path} --port ${port}"
