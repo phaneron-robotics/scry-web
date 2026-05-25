@@ -1,5 +1,10 @@
 # scry-web
 
+[![Deploy](https://github.com/phaneron-robotics/scry-web/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/phaneron-robotics/scry-web/actions/workflows/deploy.yml)
+[![scry-connect on PyPI](https://img.shields.io/pypi/v/scry-connect.svg?label=scry-connect)](https://pypi.org/project/scry-connect/)
+[![Python versions](https://img.shields.io/pypi/pyversions/scry-connect.svg)](https://pypi.org/project/scry-connect/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 Public docs + install guide + privacy pages for [Scry](https://github.com/phaneron-robotics/scry-android).
 
 Built with [MkDocs Material](https://squidfunk.github.io/mkdocs-material/).
