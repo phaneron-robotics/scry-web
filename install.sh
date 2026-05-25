@@ -170,8 +170,18 @@ install_pip() {
 
     # We install --user so we don't need sudo. The systemd user unit will
     # find scry-connect on ~/.local/bin/PATH.
+    #
+    # On Ubuntu 24.04+ (jazzy / kilted / rolling) and Ubuntu 26.04 (lyrical),
+    # the system Python is PEP 668 externally-managed and pip refuses to
+    # touch it without --break-system-packages. Detect support for that
+    # flag and pass it through; older pip (Ubuntu 22.04 / humble) doesn't
+    # know the flag and would error out if we passed it unconditionally.
     info "Installing scry-connect from PyPI…"
-    pip3 install --user --upgrade scry-connect
+    local pip_args=("install" "--user" "--upgrade" "scry-connect")
+    if pip3 install --help 2>/dev/null | grep -q break-system-packages; then
+        pip_args=("install" "--user" "--break-system-packages" "--upgrade" "scry-connect")
+    fi
+    pip3 "${pip_args[@]}"
 
     # Make sure ~/.local/bin is on PATH for current shell hints.
     if ! echo ":$PATH:" | grep -q ":$HOME/.local/bin:"; then
