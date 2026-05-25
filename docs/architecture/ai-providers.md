@@ -127,23 +127,19 @@ stateful ones.
 ```mermaid
 flowchart LR
     Start(["First launch · Scry tab · empty state"])
-    Ollama("Use Ollama · free, local
-    Settings → Ollama base URL + model")
-    Claude("Use Claude · recommended
-    Settings → Anthropic API key")
-    OpenAI("Use OpenAI
-    Settings → OpenAI API key")
-    Gemini("Use Gemini · free tier
-    Settings → Google AI API key")
-    Start ==> Ollama
-    Start ==> Claude
-    Start ==> OpenAI
-    Start ==> Gemini
-    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9;
-    classDef accent fill:#1C1B19,stroke:#A3B86C,stroke-width:2px,color:#A3B86C;
-    class Ollama,Claude,OpenAI,Gemini brand;
-    class Start accent;
-    linkStyle default stroke:#A3B86C,stroke-width:1.5px,color:#9C9A8D;
+    Ollama["Use Ollama · free, local\nSettings → Ollama base URL + model"]
+    Claude["Use Claude · recommended\nSettings → Anthropic API key"]
+    OpenAI["Use OpenAI\nSettings → OpenAI API key"]
+    Gemini["Use Gemini · free tier\nSettings → Google AI API key"]
+    Start --> Ollama
+    Start --> Claude
+    Start --> OpenAI
+    Start --> Gemini
+    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9
+    classDef accent fill:#1C1B19,stroke:#A3B86C,stroke-width:2px,color:#A3B86C
+    class Ollama,Claude,OpenAI,Gemini brand
+    class Start accent
+    linkStyle default stroke:#A3B86C,stroke-width:1.5px,color:#9C9A8D
 ```
 
 Provider and model are then chosen via the **top-bar chip** on the chat
