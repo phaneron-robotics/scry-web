@@ -48,26 +48,36 @@ Disconnected:      #A1A1AA  (OnSurfaceVariant/gray)
 
 ## Screen Flow
 
-```
-App Launch
-    │
-    ▼
-┌──────────────┐
-│ Scry (Chat)  │ ← Start destination. If no saved robot, Fleets opens instead.
-└──────┬───────┘
-       │
-       │   (bottom nav — 6 tabs, swap freely)
-       │
-┌──────┴─────────────────────────────────────────────────────────────────┐
-│  Fleets  ←→  Robot  ←→  Scry (hero)  ←→  ROS  ←→  Viz  ←→  Settings    │
-└────────────────────────────────────────────────────────────────────────┘
-                                            │
-                                            ▼  (deep-links from chat prose)
-                                ┌──────────────────────┐
-                                │  Viz section pinned  │
-                                │  scry://viz?section= │
-                                │  ...&topic=...       │
-                                └──────────────────────┘
+```mermaid
+flowchart TB
+    Launch(["App launch"])
+    Start("Scry · Chat
+    start destination · or Fleets if no saved robot")
+    Launch ==> Start
+
+    subgraph Tabs["Bottom nav · 6 tabs · swap freely"]
+        direction LR
+        Fleets("Fleets")
+        Robot("Robot")
+        Scry("Scry · hero")
+        ROS("ROS")
+        Viz("Viz")
+        Settings("Settings")
+        Fleets <==> Robot <==> Scry <==> ROS <==> Viz <==> Settings
+    end
+    Start ==> Tabs
+
+    Deeplink("Viz section pinned
+    scry://viz?section=…&topic=…")
+    Viz -.->|"deep-links from chat prose"| Deeplink
+
+    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9;
+    classDef accent fill:#1C1B19,stroke:#A3B86C,stroke-width:2px,color:#A3B86C;
+    classDef cluster fill:#1C1B19,stroke:#3A3835,stroke-width:1px,color:#9C9A8D;
+    class Start,Fleets,Robot,Scry,ROS,Viz,Settings,Deeplink brand;
+    class Launch accent;
+    class Tabs cluster;
+    linkStyle default stroke:#A3B86C,stroke-width:1.5px,color:#9C9A8D;
 ```
 
 **Bottom Navigation Bar** (6 tabs, Scry is the start destination):

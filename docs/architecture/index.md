@@ -14,11 +14,19 @@ already know the shape.
 
 ## The 30-second summary
 
-```
-┌──────────────────┐    HTTP+SSE     ┌──────────────────┐    rclpy    ┌──────────────────┐
-│   scry-android   │ ◄────────────► │  scry-connect   │ ◄────────► │   ROS 2 graph    │
-│   Kotlin/Compose │     MCP         │   Python / mcp  │             │   any DDS        │
-└──────────────────┘                 └──────────────────┘             └──────────────────┘
+```mermaid
+flowchart LR
+    A("scry-android
+    Kotlin · Compose")
+    B("scry-connect
+    Python · MCP server")
+    C("ROS 2 graph
+    any DDS · any RMW")
+    A <==>|"HTTP · MCP · SSE"| B
+    B <==>|"rclpy"| C
+    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9;
+    class A,B,C brand;
+    linkStyle 0,1 stroke:#A3B86C,stroke-width:2px,color:#9C9A8D;
 ```
 
 | Layer | What it does | Lives on |

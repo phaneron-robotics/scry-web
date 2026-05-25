@@ -87,13 +87,19 @@ robot, your LAN.**
 
 <span class="scry-eyebrow">How it works</span>
 
-```text
-   ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
-   │                 │  HTTPS  │                 │  rclpy  │                 │
-   │   Android app   │ ◄─────► │  scry-connect   │ ◄─────► │   ROS 2 graph   │
-   │   (Kotlin)      │   MCP   │   (Python MCP)  │         │   (any DDS)     │
-   │                 │   SSE   │                 │         │                 │
-   └─────────────────┘         └─────────────────┘         └─────────────────┘
+```mermaid
+flowchart LR
+    A("Android app
+    Kotlin · Compose")
+    B("scry-connect
+    Python · MCP server")
+    C("ROS 2 graph
+    any DDS / RMW")
+    A <==>|"HTTPS · MCP · SSE"| B
+    B <==>|"rclpy"| C
+    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9;
+    class A,B,C brand;
+    linkStyle 0,1 stroke:#A3B86C,stroke-width:2px,color:#9C9A8D;
 ```
 
 The phone runs the AI provider, the tool router, the rich renderer, the

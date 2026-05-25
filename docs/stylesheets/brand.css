@@ -566,3 +566,66 @@ body {
   background-color: rgba(77, 92, 47, 0.25);
   color: var(--scry-light-text);
 }
+
+/* ── Mermaid diagrams ────────────────────────────────────── */
+/* Style the mermaid SVG output and the secondary line spans
+   used inside node labels. */
+.md-typeset .mermaid {
+  background-color: var(--md-default-bg-color--light);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1.4rem 1rem;
+  margin: 1.4rem 0;
+  text-align: center;
+}
+
+.md-typeset .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Brand fonts for nodes — mermaid hard-codes "trebuchet ms"
+   unless we override at the SVG level. */
+.md-typeset .mermaid .nodeLabel,
+.md-typeset .mermaid .edgeLabel,
+.md-typeset .mermaid .cluster-label,
+.md-typeset .mermaid foreignObject div {
+  font-family: "Inter", "system-ui", "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Secondary text inside a node — wrap with <span class="m-sub"> */
+.md-typeset .mermaid .m-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78em;
+  font-weight: 400;
+  color: var(--scry-text-secondary);
+  letter-spacing: 0.01em;
+}
+
+/* Bold inside node labels — already from <b>, just tone it */
+.md-typeset .mermaid b,
+.md-typeset .mermaid strong {
+  font-weight: 500;
+  color: var(--scry-text-primary);
+}
+
+/* Edge labels — soften the bar/divider color so they read as
+   secondary annotations. */
+.md-typeset .mermaid .edgeLabel rect {
+  fill: var(--md-default-bg-color--light) !important;
+}
+
+.md-typeset .mermaid .edgeLabel {
+  color: var(--scry-text-secondary) !important;
+  font-size: 0.78em;
+}
+
+/* Light scheme adjustments */
+[data-md-color-scheme="default"] .md-typeset .mermaid .m-sub {
+  color: var(--scry-light-text-2);
+}
+[data-md-color-scheme="default"] .md-typeset .mermaid b,
+[data-md-color-scheme="default"] .md-typeset .mermaid strong {
+  color: var(--scry-light-text);
+}

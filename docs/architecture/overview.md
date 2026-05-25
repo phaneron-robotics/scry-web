@@ -4,52 +4,39 @@
 
 Scry consists of three runtime environments connected by two communication channels.
 
-```
-┌─────────────────────────────────────┐
-│         ANDROID PHONE               │
-│                                     │
-│  ┌─ Frontend (Jetpack Compose) ──┐  │
-│  │  Dashboard, Chat, Topics, Viz │  │
-│  └───────────┬───────────────────┘  │
-│              │ observes StateFlow   │
-│  ┌───────────▼───────────────────┐  │
-│  │  App Logic (Kotlin)           │  │
-│  │  ├─ AiClient (Claude/OpenAI/ │  │
-│  │  │   Gemini/Ollama)           │  │
-│  │  ├─ McpClient (HTTP → robot)  │  │
-│  │  ├─ RosbridgeClient (WS)     │  │
-│  │  ├─ Tool-call proxy loop     │  │
-│  │  └─ Room DB (local storage)  │  │
-│  └───────────┬───────────────────┘  │
-└──────────────┼──────────────────────┘
-               │
-      WiFi (same network)
-               │
-┌──────────────▼──────────────────────┐
-│         ROBOT (Linux)               │
-│                                     │
-│  ┌─ scry-connect ───────────┐   │
-│  │  Streamable HTTP on :5339    │   │
-│  │  rclpy node → ROS 2 graph   │   │
-│  │  ~99 MCP tools + SSE stream │   │
-│  └──────────────────────────────┘   │
-│                                     │
-│  ┌─ rosbridge (optional) ───────┐   │
-│  │  WebSocket on :9090          │   │
-│  │  Topic pub/sub, services     │   │
-│  └──────────────────────────────┘   │
-│                                     │
-│  ┌─ ROS 2 Runtime ─────────────┐    │
-│  │  Your nodes, topics, etc.   │    │
-│  └─────────────────────────────┘    │
-└─────────────────────────────────────┘
-               │
-          REST (HTTPS)
-               │
-┌──────────────▼──────────────────────┐
-│         CLOUD (optional)            │
-│  Claude API / OpenAI API / Gemini   │
-└─────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph Phone["Android phone"]
+        UI("Frontend
+        Compose · Dashboard · Chat · Topics · Viz")
+        Logic("App logic
+        AiClient · McpClient · proxy loop · Room DB")
+        UI ==>|"observes StateFlow"| Logic
+    end
+
+    subgraph Robot["Robot · Linux"]
+        Connect("scry-connect
+        HTTP :5339 · ~99 MCP tools · SSE")
+        Bridge("rosbridge · optional
+        WebSocket :9090")
+        ROS("ROS 2 runtime
+        your nodes, topics, services")
+        Connect <==>|"rclpy"| ROS
+        Bridge <==>|"DDS"| ROS
+    end
+
+    Cloud("AI provider · optional
+    Claude · OpenAI · Gemini · OpenRouter · Ollama")
+
+    Logic <==>|"HTTPS · MCP · SSE"| Connect
+    Logic -.->|"WebSocket"| Bridge
+    Logic <==>|"HTTPS"| Cloud
+
+    classDef brand fill:#292826,stroke:#3A3835,stroke-width:1px,color:#E8E4D9;
+    classDef cluster fill:#1C1B19,stroke:#3A3835,stroke-width:1px,color:#9C9A8D;
+    class UI,Logic,Connect,Bridge,ROS,Cloud brand;
+    class Phone,Robot cluster;
+    linkStyle default stroke:#A3B86C,stroke-width:2px,color:#9C9A8D;
 ```
 
 ## Communication Channels
