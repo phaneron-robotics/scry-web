@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # scry-connect — one-line installer for a ROS 2 robot.
 #
-# Usage:
+# Canonical hosted copy lives in the public scry-web repo so users on
+# private networks can curl it without a GitHub token:
 #   curl -fsSL https://raw.githubusercontent.com/phaneron-robotics/scry-web/master/install.sh | bash
+#
+# Keep this file in sync with scry-web/install.sh (this repo is the source
+# of truth; copy the file over when you change it).
 #
 # Or, with explicit mode selection:
 #   curl -fsSL .../install.sh | SCRY_INSTALL_MODE=docker bash
@@ -157,31 +161,62 @@ install_pip() {
     info "Mode: pip (bare-metal, systemd user unit)"
 
     if ! has python3; then
-        fail "python3 not found. Install it first (sudo apt install python3 python3-pip)."
+        fail "python3 not found. Install it first (sudo apt install python3 python3-venv)."
     fi
 
     local pyver
     pyver=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
     info "python3 ${pyver} detected"
 
-    if ! has pip3; then
-        fail "pip3 not found. Install it first (sudo apt install python3-pip)."
+    # Where the scry-connect binary will live. The systemd unit + the
+    # post-install "run this" hints both expect this path.
+    local bin_path
+
+    # Decide between an existing active venv vs. a managed one we create.
+    #
+    # We never touch the system Python directly. On Ubuntu 24.04+
+    # (jazzy / kilted / rolling) and 26.04 (lyrical) the system Python
+    # is PEP 668 externally-managed; on every distro a venv is the
+    # right tool for "install a Python app." A managed venv also keeps
+    # scry-connect's deps isolated from anything apt ships, so OS
+    # upgrades don't drag the install with them.
+    #
+    # Critical detail: ``--system-site-packages`` is required so the
+    # venv can still ``import rclpy`` from /opt/ros/<distro>/. Without
+    # it the venv is hermetic and scry-connect fails on first import.
+    local venv
+    if [ -n "${VIRTUAL_ENV:-}" ]; then
+        info "Active venv detected at \$VIRTUAL_ENV — installing into it: $VIRTUAL_ENV"
+        venv="$VIRTUAL_ENV"
+    else
+        venv="${HOME}/.local/share/scry-connect/venv"
+        if [ ! -x "${venv}/bin/python" ]; then
+            info "Creating dedicated venv at ${venv} (with --system-site-packages for rclpy)…"
+            mkdir -p "$(dirname "$venv")"
+            if ! python3 -m venv --system-site-packages "$venv" 2>/tmp/scry-venv.err; then
+                if grep -q "ensurepip\|venv" /tmp/scry-venv.err 2>/dev/null; then
+                    fail "python3-venv is not installed. Run: sudo apt install python3-venv"
+                fi
+                cat /tmp/scry-venv.err >&2
+                fail "Failed to create venv at ${venv}."
+            fi
+        else
+            info "Reusing existing venv at ${venv}"
+        fi
     fi
 
-    # We install --user so we don't need sudo. The systemd user unit will
-    # find scry-connect on ~/.local/bin/PATH.
-    #
-    # On Ubuntu 24.04+ (jazzy / kilted / rolling) and Ubuntu 26.04 (lyrical),
-    # the system Python is PEP 668 externally-managed and pip refuses to
-    # touch it without --break-system-packages. Detect support for that
-    # flag and pass it through; older pip (Ubuntu 22.04 / humble) doesn't
-    # know the flag and would error out if we passed it unconditionally.
-    info "Installing scry-connect from PyPI…"
-    local pip_args=("install" "--user" "--upgrade" "scry-connect")
-    if pip3 install --help 2>/dev/null | grep -q break-system-packages; then
-        pip_args=("install" "--user" "--break-system-packages" "--upgrade" "scry-connect")
+    info "Installing scry-connect from PyPI into the venv…"
+    "${venv}/bin/pip" install --upgrade scry-connect
+
+    bin_path="${venv}/bin/scry-connect"
+    if [ ! -x "$bin_path" ]; then
+        fail "Install completed but ${bin_path} is missing. Aborting."
     fi
-    pip3 "${pip_args[@]}"
+
+    # Expose scry-connect on $PATH via a symlink in ~/.local/bin.
+    mkdir -p "${HOME}/.local/bin"
+    ln -sf "$bin_path" "${HOME}/.local/bin/scry-connect"
+    info "Symlinked ${HOME}/.local/bin/scry-connect -> ${bin_path}"
 
     # Make sure ~/.local/bin is on PATH for current shell hints.
     if ! echo ":$PATH:" | grep -q ":$HOME/.local/bin:"; then
@@ -193,7 +228,7 @@ install_pip() {
         info "Skipping systemd unit (SCRY_NO_SYSTEMD=1)."
         info "Start manually with:"
         echo "    source /opt/ros/${distro}/setup.bash"
-        echo "    scry-connect --port ${port}"
+        echo "    ${bin_path} --port ${port}"
         return
     fi
 
@@ -201,6 +236,9 @@ install_pip() {
     mkdir -p "$unit_dir"
     local unit_path="${unit_dir}/scry-connect.service"
 
+    # Invoke the venv binary directly. That way the unit keeps working
+    # even if the user later removes the ~/.local/bin/scry-connect
+    # symlink (or if VIRTUAL_ENV pointed at a non-canonical path).
     cat > "$unit_path" <<EOF
 [Unit]
 Description=Scry Connect (MCP server for ROS 2)
@@ -210,7 +248,7 @@ After=network-online.target
 Type=simple
 Environment="ROS_DISTRO=${distro}"
 Environment="SCRY_PORT=${port}"
-ExecStart=/bin/bash -lc 'source /opt/ros/\${ROS_DISTRO}/setup.bash && exec \$HOME/.local/bin/scry-connect'
+ExecStart=/bin/bash -lc 'source /opt/ros/\${ROS_DISTRO}/setup.bash && exec ${bin_path}'
 Restart=on-failure
 RestartSec=3
 
@@ -227,8 +265,8 @@ EOF
 
     sleep 2
     info "Pairing QR (scan with the Scry Android app):"
-    "$HOME/.local/bin/scry-connect" --print-qr || \
-        warn "scry-connect not started yet — run \`scry-connect --print-qr\` after sourcing your ROS setup.bash."
+    "$bin_path" --print-qr || \
+        warn "scry-connect not started yet — run \`${bin_path} --print-qr\` after sourcing your ROS setup.bash."
 }
 
 # ─── main ───────────────────────────────────────────────────────────────
